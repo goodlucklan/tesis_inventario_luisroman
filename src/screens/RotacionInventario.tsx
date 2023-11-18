@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RotacionInventario = () => {
+export const RotacionInventario: React.FC = () => {
   return (
     <div>
       <h1>Rotacion de inventarios</h1>
