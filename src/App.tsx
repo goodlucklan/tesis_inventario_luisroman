@@ -1,11 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
-import { Register } from "./components/Register";
+import Register from "./components/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { UnprotectedRoute } from "./components/UnprotectedRoute";
-import { RotacionInventario } from "./screens/RotacionInventario";
+import { VentaForm } from "./screens/RotacionInventario";
+import PantallaProducto from "./screens/ExactitudInventario";
 function App() {
   return (
     <div className="bg-slate-300 text-white">
@@ -28,7 +29,8 @@ function App() {
             }
           />
           <Route path="/register" element={<Register />} />
-          <Route path="/rotacion" element={<RotacionInventario />} />
+          <Route path="/entradas-salidas" element={<VentaForm />} />
+          <Route path="/ajustes" element={<PantallaProducto />} />
         </Routes>
       </AuthProvider>
     </div>

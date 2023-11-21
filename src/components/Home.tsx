@@ -1,7 +1,9 @@
 import { useAuth } from "../context/AuthContext";
 import { NavBar } from "./NavBar";
+import { useNavigate } from "react-router-dom";
 export function Home() {
   const { logout, user } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -10,63 +12,68 @@ export function Home() {
       console.error(error.message);
     }
   };
+
+  const handleClick = (item: string) => {
+    navigate(item);
+    // Lógica que se ejecutará al hacer clic en un botón
+    console.log(`Haz clic en: ${item}`);
+  };
+
+  const inventoryFeatures = [
+    "Registro de Productos",
+    "Entradas y Salidas",
+    "Ajustes de Inventario",
+    "Reporte Total",
+    "Control de Usuarios",
+  ];
+
+  const inventoryFeatures2 = [
+    {
+      id: 1,
+      nombre: "Registro de Productos",
+      route: "/register",
+    },
+    {
+      id: 2,
+      nombre: "Entradas y Salidas",
+      route: "/entradas-salidas",
+    },
+    {
+      id: 3,
+      nombre: "Ajustes de Inventario",
+      route: "/ajustes",
+    },
+    {
+      id: 4,
+      nombre: "Reporte Total",
+      route: "/reporte",
+    },
+    {
+      id: 5,
+      nombre: "Control de Usuarios",
+      route: "/control",
+    },
+  ];
   return (
     <>
       <NavBar handleLogout={handleLogout} user={user} />
-      <div className="w-1/2 mx-auto mt-12 h-screen">
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Item
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Fecha
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Rotacion de inventarios
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Exactitud del inventario
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Tasa de llenado de pedidos
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                Stock promedio
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            <tr>
-              <td className="px-6 py-4 text-sm leading-5 font-medium text-gray-900">
-                1
-              </td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">
-                29/10/2023
-              </td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">50%</td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">80%</td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">80%</td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">
-                12.5
-              </td>
-            </tr>
-            <tr>
-              <td className="px-6 py-4 text-sm leading-5 font-medium text-gray-900">
-                2
-              </td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">
-                29/10/2023
-              </td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">60%</td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">77%</td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">80%</td>
-              <td className="px-6 py-4 text-sm leading-5 text-gray-500">12</td>
-            </tr>
-            {/* Agrega más filas según tus necesidades */}
-          </tbody>
-        </table>
+      <div className="flex items-center justify-center h-screen">
+        <div className="bg-gray-200 p-12 rounded shadow-md">
+          <h1 className="text-2xl font-bold mb-4 text-blue-950">
+            Funcionalidades de Inventario
+          </h1>
+          <div className="space-y-2">
+            {inventoryFeatures2.map((feature, index) => (
+              <button
+                key={index}
+                onClick={() => handleClick(feature.route)}
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
+              >
+                {feature.nombre}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
