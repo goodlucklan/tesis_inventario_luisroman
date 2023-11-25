@@ -40,13 +40,13 @@ export function Home() {
     },
     {
       id: 3,
-      nombre: "Ajustes de Inventario",
-      route: "/ajustes",
+      nombre: "Registro de movimientos",
+      route: "/register-movimientos",
     },
     {
       id: 4,
       nombre: "Reporte Total",
-      route: "/reporte",
+      route: "/Kardex",
     },
     {
       id: 5,

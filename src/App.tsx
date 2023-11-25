@@ -5,8 +5,10 @@ import Register from "./components/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { UnprotectedRoute } from "./components/UnprotectedRoute";
-import { VentaForm } from "./screens/RotacionInventario";
 import PantallaProducto from "./screens/ExactitudInventario";
+import Movimientos from "./screens/Movimientos";
+import RegisterMovimiento from "./screens/RegisterMovimiento";
+import Kardex from "./screens/Kardex";
 function App() {
   return (
     <div className="bg-slate-300 text-white">
@@ -29,8 +31,12 @@ function App() {
             }
           />
           <Route path="/register" element={<Register />} />
-          <Route path="/entradas-salidas" element={<VentaForm />} />
-          <Route path="/ajustes" element={<PantallaProducto />} />
+          <Route path="/entradas-salidas" element={<Movimientos />} />
+          <Route path="/kardex" element={<Kardex />} />
+          <Route
+            path="/register-movimientos"
+            element={<RegisterMovimiento />}
+          />
         </Routes>
       </AuthProvider>
     </div>

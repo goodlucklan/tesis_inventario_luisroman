@@ -1,98 +1,115 @@
-// RegistroProducto.js
 import React, { useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
+const RegistroForm: React.FC = () => {
+  const [categoria, setCategoria] = useState<string>("");
+  const [costo, setCosto] = useState<number | string>("");
+  const [descripcion, setDescripcion] = useState<string>("");
+  const [nombre, setNombre] = useState<string>("");
+  const [talla, setTalla] = useState<string>("");
 
-const RegistroProducto = () => {
-  const [codigo, setCodigo] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [costoInicial, setCostoInicial] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategoria = e.target.value;
+    setCategoria(selectedCategoria);
 
-  const handleSubmit = (e: any) => {
+    // Si la categoría seleccionada es "vestido", borramos la talla
+    if (selectedCategoria === "vestido") {
+      setTalla("");
+    }
+  };
+
+  const handleCostoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCosto(/^\d*\.?\d*$/.test(value) || value === "" ? value : costo);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí puedes manejar la lógica para enviar los datos a tu servidor o realizar otras acciones
-    console.log("Datos enviados:", { codigo, nombre, costoInicial, categoria });
+    try {
+      const productosRef = collection(db, "Productos");
+      const nuevoProductoRef = await addDoc(productosRef, {
+        categoria,
+        costo,
+        descripcion,
+        nombre,
+        talla,
+      });
+      console.log("Producto agregado con ID:", nuevoProductoRef.id);
+      setCategoria("");
+      setCosto("");
+      setDescripcion("");
+      setNombre("");
+      setTalla("");
+    } catch (error) {
+      console.error("Error al agregar el producto a Firestore:", error);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Registro de Producto</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            htmlFor="codigo"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Código:
-          </label>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Nombre:
           <input
             type="text"
-            id="codigo"
-            name="codigo"
-            value={codigo}
-            onChange={(e) => setCodigo(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md text-black"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="nombre"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Nombre:
-          </label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md text-black"
-            required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="costoInicial"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Costo Inicial:
-          </label>
-          <input
-            type="text"
-            id="costoInicial"
-            name="costoInicial"
-            value={costoInicial}
-            onChange={(e) => setCostoInicial(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md text-black"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="categoria"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Categoría:
-          </label>
-          <input
-            type="text"
-            id="categoria"
-            name="categoria"
+        </label>
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Categoría:
+          <select
             value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md text-black"
-            required
+            onChange={handleCategoriaChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          >
+            <option value="">Selecciona...</option>
+            <option value="tela">Tela</option>
+            <option value="vestido">Vestido</option>
+          </select>
+        </label>
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Costo:
+          <input
+            type="text"
+            value={costo}
+            onChange={handleCostoChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-        </div>
+        </label>
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Descripción:
+          <textarea
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </label>
+
+        {categoria === "vestido" && (
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Talla:
+            <input
+              type="text"
+              value={talla}
+              onChange={(e) => setTalla(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </label>
+        )}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Registrar Producto
+          Registrar
         </button>
       </form>
     </div>
   );
 };
-export default RegistroProducto;
+
+export default RegistroForm;
