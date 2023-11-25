@@ -1,7 +1,7 @@
 // VentaForm.js
 import React, { useState } from "react";
 
-export const VentaForm = () => {
+export const VentaForm: React.FC = () => {
   const [producto, setProducto] = useState("");
   const [tipoMovimiento, setTipoMovimiento] = useState("");
   const [detalle, setDetalle] = useState("");

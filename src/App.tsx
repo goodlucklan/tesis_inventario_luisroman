@@ -5,7 +5,6 @@ import Register from "./components/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { UnprotectedRoute } from "./components/UnprotectedRoute";
-import PantallaProducto from "./screens/ExactitudInventario";
 import Movimientos from "./screens/Movimientos";
 import RegisterMovimiento from "./screens/RegisterMovimiento";
 import Kardex from "./screens/Kardex";

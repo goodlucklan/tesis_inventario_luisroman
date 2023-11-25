@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import dayjs from "dayjs";
+
 const RegisterMovimiento: React.FC = () => {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
