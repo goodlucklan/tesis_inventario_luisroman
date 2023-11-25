@@ -19,14 +19,6 @@ export function Home() {
     console.log(`Haz clic en: ${item}`);
   };
 
-  const inventoryFeatures = [
-    "Registro de Productos",
-    "Entradas y Salidas",
-    "Ajustes de Inventario",
-    "Reporte Total",
-    "Control de Usuarios",
-  ];
-
   const inventoryFeatures2 = [
     {
       id: 1,
