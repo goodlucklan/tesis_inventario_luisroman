@@ -47,7 +47,7 @@ export function Login() {
   };
 
   return (
-    <div className="w-full mx-auto pt-12 max-w-xs">
+    <div className="w-full mx-auto pt-12 max-w-lg">
       {error && <Alert message={error} />}
 
       <form
@@ -67,7 +67,6 @@ export function Login() {
             id="email"
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="youremail@company.tld"
           />
         </div>
         <div className="mb-4">
@@ -83,24 +82,16 @@ export function Login() {
             id="password"
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="*************"
           />
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             type="submit"
           >
             Sign In
           </button>
-          <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#!"
-            onClick={handleResetPassword}
-          >
-            Forgot Password?
-          </a>
         </div>
       </form>
       <button
@@ -109,12 +100,6 @@ export function Login() {
       >
         Google login
       </button>
-      <p className="my-4 text-sm flex justify-between px-3">
-        Don't have an account?
-        <Link to="/register" className="text-blue-700 hover:text-blue-900">
-          Register
-        </Link>
-      </p>
     </div>
   );
 }
