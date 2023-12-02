@@ -38,7 +38,6 @@ const RegisterMovimiento: React.FC = () => {
 
   // Manejar cambios en la selección de producto
   const handleProductoChange = async (productoId: string) => {
-    console.log("productoId", productoId);
     const productoDocRef = doc(db, "Productos", productoId);
     const productoDoc = await getDoc(productoDocRef);
     if (productoDoc.exists()) {
@@ -94,9 +93,15 @@ const RegisterMovimiento: React.FC = () => {
         Fecha: new Date().toDateString(),
       });
 
-      await updateDoc(docRef, {
-        cantidad: `${getCantidadProducto - parseInt(cantidad)}`,
-      });
+      if (tipoMovimiento === "salida") {
+        await updateDoc(docRef, {
+          cantidad: `${getCantidadProducto - parseInt(cantidad)}`,
+        });
+      } else {
+        await updateDoc(docRef, {
+          cantidad: `${getCantidadProducto + parseInt(cantidad)}`,
+        });
+      }
 
       setCantidad("");
       setCategoria("");

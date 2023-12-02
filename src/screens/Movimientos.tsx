@@ -17,7 +17,7 @@ const Movimientos: React.FC = () => {
     };
 
     obtenerProductos();
-  }, []);
+  }, [movimientosData]);
 
   return <MovimientosTable movimientos={movimientosData} />;
 };

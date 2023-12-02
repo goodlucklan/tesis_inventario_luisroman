@@ -15,8 +15,6 @@ export function Home() {
 
   const handleClick = (item: string) => {
     navigate(item);
-    // Lógica que se ejecutará al hacer clic en un botón
-    console.log(`Haz clic en: ${item}`);
   };
 
   const inventoryFeatures2 = [

@@ -7,6 +7,7 @@ const Kardex: React.FC = () => {
   const [movimientos, setMovimientos] = useState([]);
   const [precioUnitario, setPrecioUnitario] = useState(null);
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
+  const [kardex, setKardex] = useState([]);
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -16,6 +17,19 @@ const Kardex: React.FC = () => {
         ...doc.data(),
       }));
       setProductos(productosData);
+    };
+
+    obtenerProductos();
+  }, []);
+
+  useEffect(() => {
+    const obtenerProductos = async () => {
+      const productosSnapshot = await getDocs(collection(db, "Kardex"));
+      const productosData: any = productosSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setKardex(productosData);
     };
 
     obtenerProductos();
@@ -52,10 +66,18 @@ const Kardex: React.FC = () => {
     setProductoSeleccionado(productoId);
   };
 
+  console.log(kardex);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="container mx-auto p-4 text-black">
-        <h1 className="text-2xl font-bold mb-4">Historial de Movimientos</h1>
+        <h1 className="text-2xl font-bold mb-4">Kardex</h1>
+        <div className="mb-4">
+          <h3>Cantidad total de productos:</h3>
+        </div>
+        <div className="mb-4">
+          <h3>Costo total del almacen:</h3>
+        </div>
         <div className="mb-4">
           <label
             htmlFor="producto"
