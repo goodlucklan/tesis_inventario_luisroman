@@ -128,6 +128,25 @@ const RegisterMovimiento: React.FC = () => {
         </div>
       ) : (
         <div className="container mx-auto p-4 text-black">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute top-4 left-4"
+            onClick={() => history.back()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+              />
+            </svg>
+          </button>
           <h1 className="text-2xl font-bold mb-4">Registro de Movimiento</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

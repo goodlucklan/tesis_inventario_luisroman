@@ -7,7 +7,7 @@ const Kardex: React.FC = () => {
   const [movimientos, setMovimientos] = useState([]);
   const [precioUnitario, setPrecioUnitario] = useState(null);
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
-  const [kardex, setKardex] = useState([]);
+  const [kardex, setKardex] = useState<any>([]);
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -41,10 +41,10 @@ const Kardex: React.FC = () => {
         const productoActual: any = productos.filter(
           (x: any) => x.nombre === productoSeleccionado
         );
-        console.log("productoActual", productoActual);
         const movimientosQuery = query(
           collection(db, "Movimiento"),
-          where("Producto", "==", productoSeleccionado)
+          where("Producto", "==", productoSeleccionado),
+          where("Aprobacion", "==", true)
         );
         const movimientosSnapshot = await getDocs(movimientosQuery);
         const movimientosData: any = movimientosSnapshot.docs.map((doc) => ({
@@ -59,24 +59,40 @@ const Kardex: React.FC = () => {
     };
 
     obtenerMovimientos();
-    console.log(precioUnitario);
   }, [productoSeleccionado]);
 
   const handleProductoChange = async (productoId: string) => {
     setProductoSeleccionado(productoId);
   };
 
-  console.log(kardex);
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute top-4 left-4"
+        onClick={() => history.back()}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+          />
+        </svg>
+      </button>
       <div className="container mx-auto p-4 text-black">
         <h1 className="text-2xl font-bold mb-4">Kardex</h1>
         <div className="mb-4">
-          <h3>Cantidad total de productos:</h3>
+          <h3>Cantidad total de productos: {kardex[0]?.totalProductos}</h3>
         </div>
         <div className="mb-4">
-          <h3>Costo total del almacen:</h3>
+          <h3>Costo total del almacen: {kardex[0]?.costoProductos}</h3>
         </div>
         <div className="mb-4">
           <label
@@ -109,8 +125,10 @@ const Kardex: React.FC = () => {
                   <th className="py-2 px-4 border-b">Fecha</th>
                   <th className="py-2 px-4 border-b">Tipo de Movimiento</th>
                   <th className="py-2 px-4 border-b">Cantidad</th>
+                  <th className="py-2 px-4 border-b">Usuario</th>
                   <th className="py-2 px-4 border-b">Precio del Producto</th>
                   <th className="py-2 px-4 border-b">Valor Total</th>
+                  <th className="py-2 px-4 border-b">Motivo</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,11 +142,15 @@ const Kardex: React.FC = () => {
                       {movimiento.Cantidad}
                     </td>
                     <td className="py-2 px-4 border-b">
+                      {movimiento.Usuario.nombre}
+                    </td>
+                    <td className="py-2 px-4 border-b">
                       {precioUnitario && precioUnitario}
                     </td>
                     <td className="py-2 px-4 border-b">
                       {precioUnitario && movimiento.Cantidad * precioUnitario}
                     </td>
+                    <td className="py-2 px-4 border-b">{movimiento.Motivo}</td>
                   </tr>
                 ))}
               </tbody>

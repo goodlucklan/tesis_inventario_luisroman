@@ -60,6 +60,10 @@ const MovimientosTable: React.FC<MovimientosTableProps> = ({ movimientos }) => {
     });
     await updateDoc(docRef, {
       Aprobacion: true,
+      Usuario: {
+        nombre: currentUser?.displayName,
+        correo: currentUser?.email,
+      },
     });
     setIsLoading(false);
   };
@@ -93,6 +97,25 @@ const MovimientosTable: React.FC<MovimientosTableProps> = ({ movimientos }) => {
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute top-4 left-4"
+        onClick={() => history.back()}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+          />
+        </svg>
+      </button>
       {isLoading ? (
         <div className="align-middle">
           <TailSpin color="blue" width={200} />
