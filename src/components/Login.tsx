@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Alert } from "./Alert";
 
@@ -8,7 +8,7 @@ export function Login() {
     email: "",
     password: "",
   });
-  const { login, loginWithGoogle, resetPassword } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -30,17 +30,6 @@ export function Login() {
     try {
       await loginWithGoogle();
       navigate("/");
-    } catch (error: any) {
-      setError(error.message);
-    }
-  };
-
-  const handleResetPassword = async (e: any) => {
-    e.preventDefault();
-    if (!user.email) return setError("Write an email to reset password");
-    try {
-      await resetPassword(user.email);
-      setError("We sent you an email. Check your inbox");
     } catch (error: any) {
       setError(error.message);
     }
