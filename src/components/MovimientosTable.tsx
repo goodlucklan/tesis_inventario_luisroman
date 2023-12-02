@@ -39,7 +39,7 @@ const MovimientosTable: React.FC<MovimientosTableProps> = ({ movimientos }) => {
     return () => unsubscribe();
   }, []);
 
-  const updateMove = async (id: any, move: any) => {
+  const updateMove = async (id: any) => {
     setIsLoading(true);
     const movimientoRef = collection(db, "Movimiento");
     const productosRef = collection(db, "Productos");
@@ -159,7 +159,7 @@ const MovimientosTable: React.FC<MovimientosTableProps> = ({ movimientos }) => {
                       </button>
                     ) : (
                       <button
-                        onClick={() => updateMove(move.id, move)}
+                        onClick={() => updateMove(move.id)}
                         type="button"
                         className="focus:outline-none text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
                       >
