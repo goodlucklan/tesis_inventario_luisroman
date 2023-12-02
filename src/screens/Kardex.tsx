@@ -93,7 +93,7 @@ const Kardex: React.FC = () => {
               </thead>
               <tbody>
                 {movimientos.map((movimiento: any) => (
-                  <tr key={movimiento.id}>
+                  <tr key={movimiento.id} className="text-center">
                     <td className="py-2 px-4 border-b">{movimiento.Fecha}</td>
                     <td className="py-2 px-4 border-b">
                       {movimiento.Tipo_Movimiento}

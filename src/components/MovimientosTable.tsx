@@ -32,7 +32,7 @@ const MovimientosTable: React.FC<MovimientosTableProps> = ({ movimientos }) => {
           </thead>
           <tbody>
             {movimientos.map((move) => (
-              <tr key={move.id}>
+              <tr key={move.id} className="text-center">
                 <td className="py-2 px-4 border-b">{move.Producto}</td>
                 <td className="py-2 px-4 border-b">{move.Tipo_Movimiento}</td>
                 <td className="py-2 px-4 border-b">{move.Cantidad}</td>

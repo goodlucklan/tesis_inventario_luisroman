@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 const RegistroForm: React.FC = () => {
   const [categoria, setCategoria] = useState<string>("");
   const [costo, setCosto] = useState<number | string>("");
+  const [cantidad, setCantidad] = useState<number | string>("");
   const [descripcion, setDescripcion] = useState<string>("");
   const [nombre, setNombre] = useState<string>("");
   const [talla, setTalla] = useState<string>("");
@@ -39,28 +40,34 @@ const RegistroForm: React.FC = () => {
     setCosto(/^\d*\.?\d*$/.test(value) || value === "" ? value : costo);
   };
 
+  const handleCantidadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCantidad(/^\d*\.?\d*$/.test(value) || value === "" ? value : costo);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
       const productosRef = collection(db, "Productos");
-      const nuevoProductoRef = await addDoc(productosRef, {
+      await addDoc(productosRef, {
         categoria,
         costo,
         descripcion,
         nombre,
         talla,
+        cantidad,
         usuario: {
           nombre: currentUser?.displayName,
           correo: currentUser?.email,
         },
       });
-      console.log("Producto agregado con ID:", nuevoProductoRef.id);
       setCategoria("");
       setCosto("");
       setDescripcion("");
       setNombre("");
       setTalla("");
+      setCantidad("");
       setLoading(false);
       notify();
     } catch (error) {
@@ -130,11 +137,22 @@ const RegistroForm: React.FC = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Costo:
+                Costo unitario:
                 <input
                   type="text"
                   value={costo}
                   onChange={handleCostoChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </label>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Cantidad:
+                <input
+                  type="text"
+                  value={cantidad}
+                  onChange={handleCantidadChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </label>
